@@ -66,7 +66,8 @@ $endif$
 %--------------------------------
 $if(lang)$
 \usepackage{polyglossia}
-\setmainlanguage{$polyglossia-lang.name$}
+%\setmainlanguage{$polyglossia-lang.name$}
+\setmainlanguage{english}
 $endif$
 
 % PDF SETUP
@@ -109,6 +110,7 @@ $endfor$
 
 \begin{flushright}
   \small
+   \textbf{Tax-Nr: $tax-nr$} \\
   $city$, \today
 \end{flushright}
 
@@ -122,20 +124,31 @@ $endfor$
 \STautoround*{2} % Get spreadtab to always display the decimal part
 $if(commasep)$\STsetdecimalsep{,}$endif$ % Use comma as decimal separator
 
-\begin{spreadtab}{{tabular}[t t t]{lp{8.2cm}r}}
+\begin{spreadtab}{{tabular}[t t t t]{lp{6.8cm}r r}}
   \hdashline[1pt/1pt]
-  @ \noalign{\vskip 2mm} \textbf{Pos.} & @ \textbf{Description} & @ \textbf{Prices in $currency$} \\ \hline
+  @ \noalign{\vskip 2mm} \textbf{Pos.} & @ \textbf{Description}  & @ \textbf{Hours} & @ \textbf{Prices in $currency$} \\ \hline
       $for(service)$ @ \noalign{\vskip 2mm} \refstepcounter{pos} \thepos 
         & @ $service.description$ 
         $if(service.details)$\newline \begin{itemize} 
           $for(service.details)$\scriptsize \item $service.details$ 
           $endfor$ \end{itemize}
-          $endif$ & $service.price$\\$endfor$ \noalign{\vskip 2mm} \hline
+          $endif$ &
+		  $if(service.hours)$
+          $service.hours$
+		  $else$
+		  @
+		  $endif$ &
+		  $if(service.price)$
+          $service.price$
+		  $else$
+		  [-1,0]*$hour-rate$
+		  $endif$\\
+          $endfor$ \noalign{\vskip 2mm} \hline
   $if(VAT)$
-    @ & @ \multicolumn{1}{r}{Subtotal:}                & :={sum(c1:[0,-1])} \\ \hhline{~~-}
-    @ & @ \multicolumn{1}{r}{VAT $VAT$\%:}               & $VAT$/100*[0,-1] \\ \hhline{~~-}
+    @ & @  \multicolumn{1}{r}{Subtotal:}        & @        & :={sum(c1:[0,-1])} \\ \hhline{~~~-}
+    @ & @  \multicolumn{1}{r}{VAT $VAT$\%:}     & @         & $VAT$/100*[0,-1] \\ \hhline{~~~-}
   $endif$
-  @ & @ \multicolumn{1}{r}{\textbf{Total:}}   & \textbf{:={$if(VAT)$[0,-1]+[0,-2]$else$sum(c1:[0,-1])$endif$}} \\ \hhline{~~-}
+  @ & @   \multicolumn{1}{r}{\textbf{Total:}}   &  \textbf{:={sum(c1:[0,-1])}} & \textbf{:={$if(VAT)$[0,-1]+[0,-2]$else$sum(c1:[0,-1])$endif$}} \\ \hhline{~~--}
 \end{spreadtab}
 
 
@@ -145,11 +158,11 @@ $if(commasep)$\STsetdecimalsep{,}$endif$ % Use comma as decimal separator
 \small
 $closingnote$
 
-\medskip
+% \smallskip
 
 \IfFileExists{signature.pdf}
 {
-      \includegraphics[height=3.5\baselineskip]{signature.pdf} \par
+      \includegraphics[height=4.5\baselineskip]{signature.pdf} \\[-3ex] %\par
 }
 
 $author$

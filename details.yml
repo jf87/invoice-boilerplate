@@ -1,5 +1,7 @@
 ---
 invoice-nr: 2015-11-04
+tax-nr: 345.343.343.343
+hour-rate: 42
 author: Max Mustermann
 city: Musterstadt
 from:
@@ -7,22 +9,24 @@ from:
 - 12345 Musterstadt
 to:
 - Erika Mustermann
-- Musterallee 1
+- Musterallee 12345
 - 12345 Musterstadt
 - Germany
 VAT: 20
 service:
-- description: The first service provided
-  price: 320.00
+- description: The first service is payed by hour
+  hours: 7
   details:
-- description: And another one, with a list of details
+- description: And another one payed with a fixed amount, with a list of details
   price: 245.00
   details:
     - Some more detailed explanation
     - of the service provided
     - Looking good
-- description: The last service provided
+- description: When hours and price is specified, price takes priority
   price: 65.00
+  hours: 10
+  
 
 closingnote: |
   Please transfer the due amount to the following bank account within the next 14 days:
@@ -39,7 +43,6 @@ closingnote: |
 # Invoice settings
 currency: EUR
 # commasep: true
-lang: en-GB
 
 # Typography and layout
 seriffont: Hoefler Text
