@@ -1,7 +1,7 @@
 ---
 invoice-nr: 2015-11-04
 tax-nr: 345.343.343.343
-hour-rate: 42
+hour-rate: 100
 author: Max Mustermann
 city: Musterstadt
 from:
@@ -15,16 +15,16 @@ to:
 VAT: 20
 service:
 - description: The first service is payed by hour
-  hours: 7
+  hours: 6
   details:
 - description: And another one payed with a fixed amount, with a list of details
-  price: 245.00
+  price: 300.00
   details:
     - Some more detailed explanation
     - of the service provided
     - Looking good
 - description: When hours and price is specified, price takes priority
-  price: 65.00
+  price: 100.00
   hours: 10
   
 
